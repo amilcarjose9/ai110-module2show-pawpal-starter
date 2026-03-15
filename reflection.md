@@ -4,13 +4,21 @@
 
 **a. Initial design**
 
-- Briefly describe your initial UML design.
-- What classes did you include, and what responsibilities did you assign to each?
+### UML Design Overview
+
+The initial UML design models a straightforward scheduling system connecting a pet owner's available time with their pet's daily needs. It uses a central planner to evaluate a list of tasks against the owner's constraints, ultimately outputting an actionable, prioritized daily schedule.
+
+### Classes and Responsibilities
+
+* **`Pet`**: Holds basic demographic details about the animal receiving care (like name, species, and age) to help personalize the app experience.
+* **`Owner`**: Represents the user of the app, keeping track of their name, the pet they own, and—most importantly—their total available time constraint for the day.
+* **`CareTask`**: Defines a specific activity (like walking or feeding), storing critical scheduling data such as how long the task takes (duration) and how important it is (priority).
+* **`DailyPlanner`**: Acts as the core logic engine of the system. It is responsible for managing the master list of tasks, running the algorithm to fit tasks into the owner's available time based on priority, and generating the final schedule along with an explanation of its choices.
+
 
 **b. Design changes**
 
-- Did your design change during implementation?
-- If yes, describe at least one change and why you made it.
+My design did not change during the initial implementation phase.
 
 ---
 
