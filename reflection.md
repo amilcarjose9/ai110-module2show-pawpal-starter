@@ -38,13 +38,11 @@ One tradeoff the scheduler makes is favoring shorter tasks over longer ones when
 
 **a. How you used AI**
 
-- How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
-- What kinds of prompts or questions were most helpful?
+I used AI primarily for translating my UML designs into Python code, generating the pytest test suite, and integrating my backend logic with the Streamlit frontend. The most helpful prompts were highly specific ones that included error tracebacks or clearly stated the exact objective for a new method.
 
 **b. Judgment and verification**
 
-- Describe one moment where you did not accept an AI suggestion as-is.
-- How did you evaluate or verify what the AI suggested?
+One moment where I didn't accept an AI suggestion as-is was during the conflict detection step; the AI initially wrote a warning that didn't specify which pet the conflicting tasks belonged to, which missed the core objective. I also questioned the AI when a variable appeared to be undefined in a list comprehension.
 
 ---
 
@@ -52,13 +50,11 @@ One tradeoff the scheduler makes is favoring shorter tasks over longer ones when
 
 **a. What you tested**
 
-- What behaviors did you test?
-- Why were these tests important?
+I tested the time constraint limits, priority-based sorting, chronological sorting by start time, daily task recurrence, and the duplicate-time conflict detection. These tests were crucial because they verified that the core algorithms were mathematically and logically sound before introducing the complexity of the Streamlit UI.
 
 **b. Confidence**
 
-- How confident are you that your scheduler works correctly?
-- What edge cases would you test next if you had more time?
+I am very confident that the scheduler works correctly, as my 5 automated pytest functions all pass and validate the core requirements. If I had more time, I would test edge cases like what happens if a user inputs an invalid time format like "25:00", tasks with zero duration, or how the app handles generating schedules that cross over midnight.
 
 ---
 
@@ -66,12 +62,12 @@ One tradeoff the scheduler makes is favoring shorter tasks over longer ones when
 
 **a. What went well**
 
-- What part of this project are you most satisfied with?
+I am most satisfied with successfully connecting the backend Python classes to the Streamlit interface. Seeing the UI dynamically update to display conflict warnings, filter tasks, and generate a chronological itinerary was very rewarding.
 
 **b. What you would improve**
 
-- If you had another iteration, what would you improve or redesign?
+If I had another iteration, I would redesign the UI to allow users to edit existing tasks directly. I would also like to upgrade the data storage from temporary session state to a real database so the schedule persists between browser sessions.
 
 **c. Key takeaway**
 
-- What is one important thing you learned about designing systems or working with AI on this project?
+One important thing I learned is that having a clear architectural plan like a UML diagram makes collaborating with AI much more effective. I also learned the importance of paying close attention to file paths and object types when debugging, as simple oversights, like passing a string instead of an object, or editing wrong files, can cause confusing errors.

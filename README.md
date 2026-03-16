@@ -61,3 +61,16 @@ python -m pytest
 * **Sorting Correctness:** Ensures that tasks are accurately sorted chronologically based on their `HH:MM` start times.
 * **Recurrence Logic:** Confirms that marking a "daily" or "weekly" task as complete automatically generates a new, fresh task for the next occurrence.
 * **Conflict Detection:** Validates that the system correctly identifies and flags warnings when multiple tasks are scheduled for the exact same time slot.
+
+## Features
+
+* **Chronological Sorting:** Automatically sorts scheduled tasks and the daily itinerary chronologically based on `HH:MM` start times.
+* **Conflict Detection:** Identifies and warns the user if multiple care tasks are scheduled for the exact same time slot, specifying which pets are affected.
+* **Automated Recurrence:** Seamlessly rolls over "daily" or "weekly" tasks by generating a new, incomplete task for the next due date when the current one is marked complete.
+* **Smart Filtering:** Allows users to filter their master task list dynamically by completion status or by a specific pet's name. 
+* **Priority-Based Scheduling:** Intelligently fits the highest-priority tasks into the owner's available time constraints, skipping lower-priority tasks that exceed the time limit.
+
+## 📸 Demo
+<a href="/demo_screenshot.png" target="_blank">
+  <img src='/demo_screensho.png' title='PawPal App' width='' alt='PawPal App' class='center-block' />
+</a>.
