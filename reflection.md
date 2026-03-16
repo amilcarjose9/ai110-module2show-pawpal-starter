@@ -26,13 +26,11 @@ My design did not change during the initial implementation phase.
 
 **a. Constraints and priorities**
 
-- What constraints does your scheduler consider (for example: time, priority, preferences)?
-- How did you decide which constraints mattered most?
+The scheduler primarily considers the owner's total available time, task priority levels, and individual task durations. I decided that task priority mattered most to ensure critical pet needs, like feeding or medication, are always scheduled first. Task duration serves as a secondary constraint to maximize the total number of tasks completed within the remaining time.
 
 **b. Tradeoffs**
 
-- Describe one tradeoff your scheduler makes.
-- Why is that tradeoff reasonable for this scenario?
+One tradeoff the scheduler makes is favoring shorter tasks over longer ones when priority levels are tied. This is a reasonable tradeoff for a busy pet owner because completing multiple smaller care activities, like a quick training session and giving treats, often provides a more balanced routine than consuming all remaining available time on a single, lengthy task.
 
 ---
 

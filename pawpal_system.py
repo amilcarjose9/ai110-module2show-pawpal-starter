@@ -1,4 +1,5 @@
-from typing import List
+from typing import List, Optional
+from datetime import date, timedelta
 
 class Pet:
   def __init__(self, name: str, species: str, age: int):
@@ -25,12 +26,27 @@ class Owner:
 
 
 class CareTask:
-  def __init__(self, name: str, duration: int, priority: int, category: str = ""):
-    """Initialize a new CareTask with a specific duration, priority level, and optional category."""
+  def __init__(
+    self, 
+    name: str, 
+    duration: int, 
+    priority: int, 
+    category: str = "",
+    start_time: str = "08:00", 
+    frequency: str = "once",
+    pet_name: str = "",
+    due_date: Optional[date] = None
+  ):
+    """Initialize a new CareTask with scheduling and recurrence details."""
     self.name = name
     self.duration = duration
     self.priority = priority
     self.category = category
+    self.start_time = start_time
+    self.frequency = frequency.lower()
+    self.pet_name = pet_name
+    self.is_completed = False
+    self.due_date = due_date if due_date else date.today()
 
   def update_task(self, duration: int, priority: int) -> None:
     """Update the task's duration and priority settings."""
@@ -56,6 +72,64 @@ class DailyPlanner:
     if task in self.all_tasks:
       self.all_tasks.remove(task)
 
+  def sort_by_time(self) -> List[CareTask]:
+    """Sort tasks chronologically based on their HH:MM start time string."""
+    return sorted(self.all_tasks, key=lambda t: t.start_time)
+
+  def filter_tasks(self, status: Optional[bool] = None, pet_name: Optional[str] = None) -> List[CareTask]:
+    """Filter the master list by completion status and/or pet name."""
+    filtered_list = self.all_tasks
+    if status is not None:
+      filtered_list = [t for t in filtered_list if t.is_completed == status]
+    if pet_name is not None:
+      filtered_list = [t for t in filtered_list if t.pet_name.lower() == pet_name.lower()]
+    return filtered_list
+
+  def mark_task_complete(self, task: CareTask) -> None:
+    """Mark a task complete and generate the next occurrence if it's a recurring task."""
+    if task in self.all_tasks:
+      task.is_completed = True
+      
+      # Check for recurrence and create a new task using timedelta
+      if task.frequency in ["daily", "weekly"]:
+        days_to_add = 1 if task.frequency == "daily" else 7
+        new_due_date = task.due_date + timedelta(days=days_to_add)
+        
+        new_task = CareTask(
+          name=task.name,
+          duration=task.duration,
+          priority=task.priority,
+          category=task.category,
+          start_time=task.start_time,
+          frequency=task.frequency,
+          pet_name=task.pet_name,
+          due_date=new_due_date
+        )
+        self.add_task(new_task)
+
+  def detect_conflicts(self) -> List[str]:
+    """Detect if multiple tasks are scheduled at the same time and return a list of warnings."""
+    warnings = []
+    time_slots = {}
+    
+    # Group tasks by their start_time
+    for task in self.all_tasks:
+      if not task.is_completed:  # Only check incomplete tasks
+        if task.start_time not in time_slots:
+          time_slots[task.start_time] = []
+        time_slots[task.start_time].append(task)
+                
+    # Check for any time slots that have more than 1 task
+    for time, tasks in time_slots.items():
+      if len(tasks) > 1:
+        # Build a detailed string showing the task and the pet it belongs to
+        task_details = [f"'{t.name}' (for {t.pet_name or 'Unknown Pet'})" for t in tasks]
+        conflict_names = " and ".join(task_details)
+        
+        warnings.append(f"⚠️ Conflict detected at {time}: {conflict_names}.")
+            
+    return warnings
+  
   def generate_plan(self) -> None:
     """Generate a daily schedule by fitting the highest priority tasks into the owner's available time."""
     # Reset lists and reasoning for fresh generation
@@ -69,6 +143,9 @@ class DailyPlanner:
     sorted_tasks = sorted(self.all_tasks, key=lambda t: (t.priority, t.duration))
 
     for task in sorted_tasks:
+      if task.is_completed:
+        continue # Skip already completed tasks when planning the rest of the day
+          
       if task.duration <= time_remaining:
         self.scheduled_tasks.append(task)
         time_remaining -= task.duration

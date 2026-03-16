@@ -22,6 +22,10 @@ Your final app should:
 - Display the plan clearly (and ideally explain the reasoning)
 - Include tests for the most important scheduling behaviors
 
+## Smarter Scheduling
+
+PawPal+ has been upgraded with intelligent algorithms to better manage your pet's routine. The app now supports chronological sorting by time, filtering tasks by pet or completion status, and automatically rolling over recurring daily or weekly tasks. It also features a lightweight conflict detection system that warns you if overlapping tasks are scheduled for the exact same time.
+
 ## Getting started
 
 ### Setup
