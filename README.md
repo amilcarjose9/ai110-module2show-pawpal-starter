@@ -45,3 +45,19 @@ pip install -r requirements.txt
 5. Add tests to verify key behaviors.
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
+
+## Testing PawPal+
+
+PawPal+ includes an automated test suite built with `pytest`. You can run the entire test suite from your terminal using the following command:
+
+```bash
+python -m pytest
+
+```
+
+**What the tests cover:**
+
+* **Time Constraints & Priority:** Verifies that higher-priority tasks are scheduled first, and that tasks are correctly skipped if they exceed the owner's total available time.
+* **Sorting Correctness:** Ensures that tasks are accurately sorted chronologically based on their `HH:MM` start times.
+* **Recurrence Logic:** Confirms that marking a "daily" or "weekly" task as complete automatically generates a new, fresh task for the next occurrence.
+* **Conflict Detection:** Validates that the system correctly identifies and flags warnings when multiple tasks are scheduled for the exact same time slot.
